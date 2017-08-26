@@ -17,12 +17,15 @@
 </ul>
 <hr>
 <h2>Adicionar Produto</h2>
+<?php if(isset($msg)): ?>
+	<p><?php echo $msg ?></p>
+<?php endif; ?>
 <form action="produto/salvar" method="POST">
 	<label for="titulo">Título</label>
 	<input type="text" name="titulo">
-	<label for="descricao">Título</label>
+	<label for="descricao">Descrição</label>
 	<input type="text" name="descricao">
-	<label for="valor">Título</label>
+	<label for="valor">Valor</label>
 	<input type="text" name="valor">
 	<button type="submit">Salvar</button>
 </form>

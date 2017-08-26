@@ -43,8 +43,13 @@ function getPagina() {
 	if($metodo == "POST") {
 		switch ($uri) {
 			case "/produto/salvar":
-				salvarProduto($_POST);
-				include("pages/home.php");
+				if(!salvarProduto($_POST)){
+					$msg = "Erro ao salvar";
+					$produtos = getProdutos();
+					include("pages/home.php");
+					break;
+				}
+				header("location:../");
 			default:
 				include("pages/home.php");
 				break;

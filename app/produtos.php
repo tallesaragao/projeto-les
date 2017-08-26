@@ -29,7 +29,14 @@ function buscarProdutos($busca) {
 }
 
 function salvarProduto($request) {
-	var_dump($request);exit;
+	$conexao = getConnection();
+	$sql = "insert into produto(titulo, descricao, valor) values(:titulo, :descricao, :valor);";
+	$stmt = $conexao->prepare($sql);
+	$stmt->bindValue(":titulo", $request["titulo"]);
+	$stmt->bindValue(":descricao", $request["descricao"]);
+	$stmt->bindValue(":valor", $request["valor"]);
+	$stmt->execute();
+	return $conexao->lastInsertId();
 }
 
 ?>
