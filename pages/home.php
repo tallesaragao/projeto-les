@@ -14,16 +14,28 @@
 	<thead>
 		<tr>
 			<th>Nome</th>
-			<th>Descrição</th>
-			<th>Valor</th>
+			<th>Quantidade</th>
+			<th>Fabricante</th>
+			<th>Fornecedor</th>
+			<th>Categoria</th>
+			<th>Data de Fab.</th>
+			<th>Validade</th>
+			<th>Alcoólica?</th>
+			<th>Teor Álcool</th>
 		</tr>
 	</thead>
 <tbody>
 	<?php foreach($produtos as $produto): ?>
 		<tr>
-			<td><?php echo $produto["titulo"] ?></td>
-			<td><?php echo $produto["descricao"] ?></td>
-			<td><?php echo number_format($produto["valor"], 2, ",", ".") ?></td>
+			<td><?php echo $produto["nome"] ?></td>
+			<td><?php echo $produto["quantidade"] ?></td>
+			<td><?php echo $produto["fabricante"] ?></td>
+			<td><?php echo $produto["fornecedor"] ?></td>
+			<td><?php echo $produto["categoria"] ?></td>
+			<td><?php echo $produto["dataFabricacao"] ?></td>
+			<td><?php echo $produto["dataValidade"] ?></td>
+			<td><?php echo $produto["alcoolica"] ?></td>
+			<td><?php echo $produto["teorAlcool"] ?></td>
 		</tr>
 	<?php endforeach; ?>
 </tbody>

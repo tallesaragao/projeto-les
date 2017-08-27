@@ -29,36 +29,25 @@ function buscarProdutos($busca) {
 }
 
 function salvarProduto($request) {
-	$conexao = getConnection();
-	$sql = "insert into bebida(nome, quantidade, fabricante, fornecedor, categoria, dataFabricacao, dataValidade, alcoolica, teorAlcool) values(:nome, :quantidade, :fabricante, :fornecedor, :categoria, :dataFabricacao, :dataValidade, :alcoolica, :teorAlcool);";
-	$stmt = $conexao->prepare($sql);
-	$nome = $request["nome"];
-	$quantidade = $request["quantidade"];
-	$fabricante = $request["fabricante"];
-	$fornecedor = $request["fornecedor"];
-	$categoria = $request["categoria"];
-
-	$dataFabricacaoString = $request["dataFabricacao"];
-	$date = mysql_real_escape_string($dataFabricacaoString);
-	$time = strtotime($dataFabricacaoString);
-	$dataFabricacao = date("d/m/Y", $time);
-
-	var_dump($dataFabricacao);exit;
-	$dataValidadeString = $request["dataValidade"];
-	$alcoolica = $request["alcoolica"];
-	$teorAlcool = $request["teorAlcool"];
-	$stmt->bindValue(":nome", $request["nome"]);
-	$stmt->bindValue(":quantidade", $request["quantidade"]);
-	$stmt->bindValue(":fabricante", $request["fabricante"]);
-	$stmt->bindValue(":fornecedor", $request["fornecedor"]);
-	$stmt->bindValue(":categoria", $request["categoria"]);
-	$stmt->bindValue(":dataFabricacao", $request["dataFabricacao"]);
-	$stmt->bindValue(":dataValidade", $request["dataValidade"]);
-	$stmt->bindValue(":alcoolica", $request["alcoolica"]);
-	//$stmt->bindValue(":teorAlcool", $request["teorAlcool"]);
-	$stmt->execute();
-	var_dump($conexao->lastInsertId());exit;
-	//return $conexao->lastInsertId();
+	try {
+		$conexao = getConnection();
+		$sql = "insert into bebida(nome, quantidade, fabricante, fornecedor, categoria, dataFabricacao, dataValidade, alcoolica, teorAlcool)
+				values(:nome, :quantidade, :fabricante, :fornecedor, :categoria, STR_TO_DATE(:dataFabricacao, '%d/%m/%Y'),
+				STR_TO_DATE(:dataValidade, '%d/%m/%Y'), :alcoolica, :teorAlcool);";
+		$stmt = $conexao->prepare($sql);
+		$stmt->bindValue(":nome", $request["nome"]);
+		$stmt->bindValue(":quantidade", $request["quantidade"]);
+		$stmt->bindValue(":fabricante", $request["fabricante"]);
+		$stmt->bindValue(":fornecedor", $request["fornecedor"]);
+		$stmt->bindValue(":categoria", $request["categoria"]);
+		$stmt->bindValue(":dataFabricacao", $request["dataFabricacao"]);
+		$stmt->bindValue(":dataValidade", $request["dataValidade"]);
+		$stmt->bindValue(":alcoolica", $request["alcoolica"]);
+		$stmt->bindValue(":teorAlcool", $request["teorAlcool"]);
+		$stmt->execute();
+	} catch(Exception $e) {
+		var_dump($e->getMessage());exit;
+	}
 }
 
 ?>
