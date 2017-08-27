@@ -32,8 +32,8 @@ function salvarProduto($request) {
 	try {
 		$conexao = getConnection();
 		$sql = "insert into bebida(nome, quantidade, fabricante, fornecedor, categoria, dataFabricacao, dataValidade, alcoolica, teorAlcool)
-				values(:nome, :quantidade, :fabricante, :fornecedor, :categoria, STR_TO_DATE(:dataFabricacao, '%d/%m/%Y'),
-				STR_TO_DATE(:dataValidade, '%d/%m/%Y'), :alcoolica, :teorAlcool);";
+				values(:nome, :quantidade, :fabricante, :fornecedor, :categoria, STR_TO_DATE(:dataFabricacao, '%Y-%m-%d'),
+				STR_TO_DATE(:dataValidade, '%Y-%m-%d'), :alcoolica, :teorAlcool);";
 		$stmt = $conexao->prepare($sql);
 		$stmt->bindValue(":nome", $request["nome"]);
 		$stmt->bindValue(":quantidade", $request["quantidade"]);
@@ -43,11 +43,24 @@ function salvarProduto($request) {
 		$stmt->bindValue(":dataFabricacao", $request["dataFabricacao"]);
 		$stmt->bindValue(":dataValidade", $request["dataValidade"]);
 		$stmt->bindValue(":alcoolica", $request["alcoolica"]);
-		$stmt->bindValue(":teorAlcool", $request["teorAlcool"]);
+		if($request["teorAlcool"] === "") {
+			$stmt->bindValue(":teorAlcool", NULL);
+		}
+		else {
+			$stmt->bindValue(":teorAlcool", $request["teorAlcool"]);
+		}
 		$stmt->execute();
+		return $conexao->lastInsertId();
 	} catch(Exception $e) {
 		var_dump($e->getMessage());exit;
 	}
+}
+
+function excluirProduto($request) {
+	$conexao = getConnection();
+	$sql = "delete from bebida where id_bebida=:id";
+	$stmt = $conexao->prepare($sql);
+	$stmt->bindValue(":id", $request["id"]);
 }
 
 ?>

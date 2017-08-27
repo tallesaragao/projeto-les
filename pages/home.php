@@ -4,10 +4,9 @@
 </ul>
 <hr>
 <h2>Pesquisa de produto</h2>
-<form action="/busca" method="GET">
+<form>
 	<input type="text" name="busca">
-	<button type="submit">Pesquisar</button>
-</form>
+	<button type="submit" formaction="/busca">Pesquisar</button>
 <hr>
 <h2>Lista de Produtos</h2>
 <table>
@@ -36,10 +35,12 @@
 			<td><?php echo $produto["dataValidade"] ?></td>
 			<td><?php echo $produto["alcoolica"] ?></td>
 			<td><?php echo $produto["teorAlcool"] ?></td>
+			<td><button type="submit" formaction="produto/excluir?id=<?php echo $produto['id_produto'] ?>">Excluir</button></td>
 		</tr>
 	<?php endforeach; ?>
 </tbody>
 </table>
+</form>
 <hr>
 <h2>Adicionar Produto</h2>
 <?php if(isset($msg)): ?>
