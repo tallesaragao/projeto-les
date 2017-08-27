@@ -50,6 +50,7 @@ function getPagina() {
 					break;
 				}
 				header("location:../");
+				break;
 			default:
 				include("pages/home.php");
 				break;

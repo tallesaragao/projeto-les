@@ -8,7 +8,7 @@ function getProdutos() {
 	);
 
 	$conexao = getConnection();
-	$sql = "select * from produto";
+	$sql = "select * from bebida";
 	$result = $conexao->query($sql);
 	$produtos = $result->fetchAll();
 	return $produtos;
@@ -30,13 +30,35 @@ function buscarProdutos($busca) {
 
 function salvarProduto($request) {
 	$conexao = getConnection();
-	$sql = "insert into produto(titulo, descricao, valor) values(:titulo, :descricao, :valor);";
+	$sql = "insert into bebida(nome, quantidade, fabricante, fornecedor, categoria, dataFabricacao, dataValidade, alcoolica, teorAlcool) values(:nome, :quantidade, :fabricante, :fornecedor, :categoria, :dataFabricacao, :dataValidade, :alcoolica, :teorAlcool);";
 	$stmt = $conexao->prepare($sql);
-	$stmt->bindValue(":titulo", $request["titulo"]);
-	$stmt->bindValue(":descricao", $request["descricao"]);
-	$stmt->bindValue(":valor", $request["valor"]);
+	$nome = $request["nome"];
+	$quantidade = $request["quantidade"];
+	$fabricante = $request["fabricante"];
+	$fornecedor = $request["fornecedor"];
+	$categoria = $request["categoria"];
+
+	$dataFabricacaoString = $request["dataFabricacao"];
+	$date = mysql_real_escape_string($dataFabricacaoString);
+	$time = strtotime($dataFabricacaoString);
+	$dataFabricacao = date("d/m/Y", $time);
+
+	var_dump($dataFabricacao);exit;
+	$dataValidadeString = $request["dataValidade"];
+	$alcoolica = $request["alcoolica"];
+	$teorAlcool = $request["teorAlcool"];
+	$stmt->bindValue(":nome", $request["nome"]);
+	$stmt->bindValue(":quantidade", $request["quantidade"]);
+	$stmt->bindValue(":fabricante", $request["fabricante"]);
+	$stmt->bindValue(":fornecedor", $request["fornecedor"]);
+	$stmt->bindValue(":categoria", $request["categoria"]);
+	$stmt->bindValue(":dataFabricacao", $request["dataFabricacao"]);
+	$stmt->bindValue(":dataValidade", $request["dataValidade"]);
+	$stmt->bindValue(":alcoolica", $request["alcoolica"]);
+	//$stmt->bindValue(":teorAlcool", $request["teorAlcool"]);
 	$stmt->execute();
-	return $conexao->lastInsertId();
+	var_dump($conexao->lastInsertId());exit;
+	//return $conexao->lastInsertId();
 }
 
 ?>
