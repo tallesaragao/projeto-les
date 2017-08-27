@@ -1,8 +1,3 @@
-<h2>PHP com HTML</h2>
-<ul>
-	<?php exibirUsuarios() ?>
-</ul>
-<hr>
 <h2>Pesquisa de produto</h2>
 <form>
 	<input type="text" name="busca">

@@ -1,8 +1,6 @@
 <?php
 
-include("config.php");
 include("db.php");
-include("users.php");
 include("produtos.php");
 
 function getPagina() {
