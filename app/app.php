@@ -6,7 +6,6 @@ include("users.php");
 include("produtos.php");
 
 function getPagina() {
-
 	$uri = $_SERVER["REQUEST_URI"];
 	//Quebrando a string para métodos GET e pegando o primeiro elemento do array resultante
 	$uri = explode("?", $uri);
@@ -34,6 +33,9 @@ function getPagina() {
 				$produtos = buscarProdutos($_GET["busca"]);
 				include("pages/home.php");
 				break;
+			case "/produto/excluir":
+				excluirProduto($_GET);
+				header("location:../");
 			default:
 				$produtos = getProdutos();
 				include("pages/home.php");

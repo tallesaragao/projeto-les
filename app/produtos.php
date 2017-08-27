@@ -61,6 +61,7 @@ function excluirProduto($request) {
 	$sql = "delete from bebida where id_bebida=:id";
 	$stmt = $conexao->prepare($sql);
 	$stmt->bindValue(":id", $request["id"]);
+	$stmt->execute();
 }
 
 ?>

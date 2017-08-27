@@ -7,6 +7,7 @@
 <form>
 	<input type="text" name="busca">
 	<button type="submit" formaction="/busca">Pesquisar</button>
+</form>
 <hr>
 <h2>Lista de Produtos</h2>
 <table>
@@ -25,22 +26,25 @@
 	</thead>
 <tbody>
 	<?php foreach($produtos as $produto): ?>
-		<tr>
-			<td><?php echo $produto["nome"] ?></td>
-			<td><?php echo $produto["quantidade"] ?></td>
-			<td><?php echo $produto["fabricante"] ?></td>
-			<td><?php echo $produto["fornecedor"] ?></td>
-			<td><?php echo $produto["categoria"] ?></td>
-			<td><?php echo $produto["dataFabricacao"] ?></td>
-			<td><?php echo $produto["dataValidade"] ?></td>
-			<td><?php echo $produto["alcoolica"] ?></td>
-			<td><?php echo $produto["teorAlcool"] ?></td>
-			<td><button type="submit" formaction="produto/excluir?id=<?php echo $produto['id_produto'] ?>">Excluir</button></td>
-		</tr>
+		<form>
+			<tr>
+				<td><?php echo $produto["nome"] ?></td>
+				<td><?php echo $produto["quantidade"] ?></td>
+				<td><?php echo $produto["fabricante"] ?></td>
+				<td><?php echo $produto["fornecedor"] ?></td>
+				<td><?php echo $produto["categoria"] ?></td>
+				<td><?php echo $produto["dataFabricacao"] ?></td>
+				<td><?php echo $produto["dataValidade"] ?></td>
+				<td><?php echo $produto["alcoolica"] ?></td>
+				<td><?php echo $produto["teorAlcool"] ?></td>
+				<td><button type="submit" formaction="produto/excluir" onclick="return excluir()">Excluir</button></td>
+				<input type="hidden" name="id" value="<?php echo $produto['id_bebida'] ?>">
+			</tr>
+		</form>
 	<?php endforeach; ?>
+	</form>
 </tbody>
 </table>
-</form>
 <hr>
 <h2>Adicionar Produto</h2>
 <?php if(isset($msg)): ?>
@@ -73,3 +77,10 @@
 		<button type="submit">Salvar</button>
 	</fieldset>
 </form>
+<script type="text/javascript">
+	function excluir() {
+		if (confirm("Deseja realmente excluir?") == false) {
+			return false;
+		}
+	}
+</script>
