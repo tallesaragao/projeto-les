@@ -14,6 +14,7 @@
 		<tr>
 			<th>Nome</th>
 			<th>Quantidade</th>
+			<th>Preço (R$)</th>
 			<th>Fabricante</th>
 			<th>Fornecedor</th>
 			<th>Categoria</th>
@@ -29,6 +30,7 @@
 			<tr>
 				<td><?php echo $produto["nome"] ?></td>
 				<td><?php echo $produto["quantidade"] ?></td>
+				<td><?php echo $produto["preco"] ?></td>
 				<td><?php echo $produto["fabricante"] ?></td>
 				<td><?php echo $produto["fornecedor"] ?></td>
 				<td><?php echo $produto["categoria"] ?></td>

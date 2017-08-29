@@ -1,12 +1,6 @@
 <?php 
 
 function getProdutos() {
-	$produtos = array(
-		["titulo"=>"PHP Básico", "descricao"=>"Curso de PHP Básico", "valor"=>"129.90"],
-		["titulo"=>"PHP com PDO", "descricao"=>"Curso de PHP com PDO", "valor"=>"159.90"],
-		["titulo"=>"PHP OO", "descricao"=>"Curso de PHP Orientado a Objetos", "valor"=>"199.90"]
-	);
-
 	$conexao = getConnection();
 	$sql = "select * from bebida";
 	$result = $conexao->query($sql);
@@ -41,12 +35,13 @@ function buscaPorId($id) {
 function salvarProduto($request) {
 	try {
 		$conexao = getConnection();
-		$sql = "insert into bebida(nome, quantidade, fabricante, fornecedor, categoria, dataFabricacao, dataValidade, alcoolica, teorAlcool)
-				values(:nome, :quantidade, :fabricante, :fornecedor, :categoria, STR_TO_DATE(:dataFabricacao, '%Y-%m-%d'),
+		$sql = "insert into bebida(nome, quantidade, preco, fabricante, fornecedor, categoria, dataFabricacao, dataValidade, alcoolica, teorAlcool)
+				values(:nome, :quantidade, :preco, :fabricante, :fornecedor, :categoria, STR_TO_DATE(:dataFabricacao, '%Y-%m-%d'),
 				STR_TO_DATE(:dataValidade, '%Y-%m-%d'), :alcoolica, :teorAlcool);";
 		$stmt = $conexao->prepare($sql);
 		$stmt->bindValue(":nome", $request["nome"]);
 		$stmt->bindValue(":quantidade", $request["quantidade"]);
+		$stmt->bindValue(":preco", $request["preco"]);
 		$stmt->bindValue(":fabricante", $request["fabricante"]);
 		$stmt->bindValue(":fornecedor", $request["fornecedor"]);
 		$stmt->bindValue(":categoria", $request["categoria"]);
@@ -76,10 +71,11 @@ function excluirProduto($request) {
 
 function editarProduto($request) {
 	$conexao = getConnection();
-	$sql = "update bebida set nome=:nome, quantidade=:quantidade, fabricante=:fabricante, fornecedor=:fornecedor, categoria=:categoria, dataFabricacao=STR_TO_DATE(:dataFabricacao, '%Y-%m-%d'), dataValidade=STR_TO_DATE(:dataValidade, '%Y-%m-%d'), alcoolica=:alcoolica, teorAlcool=:teorAlcool where id_bebida=:id;";
+	$sql = "update bebida set nome=:nome, quantidade=:quantidade, preco=:preco, fabricante=:fabricante, fornecedor=:fornecedor, categoria=:categoria, dataFabricacao=STR_TO_DATE(:dataFabricacao, '%Y-%m-%d'), dataValidade=STR_TO_DATE(:dataValidade, '%Y-%m-%d'), alcoolica=:alcoolica, teorAlcool=:teorAlcool where id_bebida=:id;";
 	$stmt = $conexao->prepare($sql);
 	$stmt->bindValue(":nome", $request["nome"]);
 	$stmt->bindValue(":quantidade", $request["quantidade"]);
+	$stmt->bindValue(":preco", $request["preco"]);
 	$stmt->bindValue(":fabricante", $request["fabricante"]);
 	$stmt->bindValue(":fornecedor", $request["fornecedor"]);
 	$stmt->bindValue(":categoria", $request["categoria"]);

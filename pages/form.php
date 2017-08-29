@@ -15,6 +15,9 @@
 		<label for="quantidade">Quantidade</label>
 		<input type="number" step="any" name="quantidade" required
 		value="<?php echo (isset($produtoEdit)? $produtoEdit['quantidade'] : ''); ?>"><br>
+		<label for="preco">Preço</label>
+		<input type="number" step="any" name="preco" required
+		value="<?php echo (isset($produtoEdit)? $produtoEdit['preco'] : ''); ?>"><br>
 		<label for="fabricante">Fabricante</label>
 		<input type="text" name="fabricante" required value="<?php echo (isset($produtoEdit)? $produtoEdit['fabricante'] : ''); ?>"><br>
 		<label for="fornecedor">Fornecedor</label>
