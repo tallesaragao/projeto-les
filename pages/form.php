@@ -1,9 +1,18 @@
-<?php if(isset($produtoEdit)): ?>
-	<h2>Editar Produto</h2>
+<?php 
+	$metodo = $_SERVER["REQUEST_METHOD"];
+	if($metodo == "GET") {
+		$operacao = $_GET;
+	}
+	else {
+		$operacao = $_POST;
+	}
+?>
+<?php if($operacao["operacao"] == "alterar"): ?>
+	<h2>Editar bebida</h2>
 	<form action="/produto/editar" method="POST">
-		<input type="hidden" name="id" value="<?php echo $produtoEdit['id_bebida']; ?>">
+		<input type="hidden" name="id_bebida" value="<?php echo $produtoEdit['id_bebida']; ?>">
 <?php else: ?>
-	<h2>Adicionar Produto</h2>
+	<h2>Adicionar bebida</h2>
 	<form action="/produto/salvar" method="POST">
 <?php endif; ?>
 <?php if(isset($msg)): ?>
@@ -15,7 +24,13 @@
 		<label for="quantidade">Quantidade</label>
 		<input type="number" step="any" name="quantidade" required
 		value="<?php echo (isset($produtoEdit)? $produtoEdit['quantidade'] : ''); ?>"><br>
-		<label for="preco">Preço</label>
+		<label for="minima">Quantidade Mínima</label>
+		<input type="number" step="any" name="minima" required
+		value="<?php echo (isset($produtoEdit)? $produtoEdit['minima'] : ''); ?>"><br>
+		<label for="maxima">Quantidade Máxima</label>
+		<input type="number" step="any" name="maxima" required
+		value="<?php echo (isset($produtoEdit)? $produtoEdit['maxima'] : ''); ?>"><br>
+		<label for="preco">Preço (R$)</label>
 		<input type="number" step="any" name="preco" required
 		value="<?php echo (isset($produtoEdit)? $produtoEdit['preco'] : ''); ?>"><br>
 		<label for="fabricante">Fabricante</label>
@@ -37,24 +52,43 @@
 			<?php else: ?>
 				<option disabled selected value="">Escolha sua opção</option>
 			<?php endif; ?>			
-			<option value="1">Sim</option>
 			<?php
-				if(!isset($produtoEdit)) {
-					echo "<option value='0'>Não</option>";
+				$html = "";
+				if($_GET["operacao"] == "alterar") {
+					if($produtoEdit["alcoolica"] == 1) {
+						$html = "<option value='1' selected>Sim</option>".
+								"<option value='0'>Não</option>";
+					}
+					else {						
+						$html = "<option value='1'>Sim</option>".
+								"<option value='0' selected>Não</option>";
+					}
 				}
 				else {
-					echo "<option value='0' selected>Não</option>";
+					if(isset($produtoEdit) && $produtoEdit["alcoolica"] == 0) {						
+						$html = "<option value='1'>Sim</option>".
+								"<option value='0' selected>Não</option>";
+					}
+					else {					
+						$html = "<option value='1'>Sim</option>".
+								"<option value='0'>Não</option>";						
+					}
 				}
+				echo $html;
 			?>
 		</select><br>
 		<label for="teorAlcool">Teor de álcool (%)</label>
 		<input type="number" step="any" name="teorAlcool"
 		value="<?php echo (isset($produtoEdit['teorAlcool'])? $produtoEdit['teorAlcool'] : ''); ?>"><br>
-		<?php if(isset($produtoEdit)): ?>			
-			<button type="submit">Alterar</button>
+		<label for="ingredientes">Ingredientes</label>
+		<textarea name="ingredientes">
+			<?php echo (isset($produtoEdit)? $produtoEdit['ingredientes'] : ''); ?>
+		</textarea><br>
+		<?php if($operacao["operacao"] == "alterar"): ?>			
+			<button type="submit" name="operacao" value="alterar">Alterar</button>
 		<?php else: ?>
-			<button type="submit">Salvar</button>
+			<button type="submit" name="operacao" value="salvar">Salvar</button>
 		<?php endif; ?>
-		<a href="/">Cancelar</a>
+		<a href="/produto">Cancelar</a>
 	</fieldset>
 </form>

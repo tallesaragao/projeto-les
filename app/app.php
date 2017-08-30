@@ -14,21 +14,19 @@ function getPagina() {
 	if($metodo == "GET") {
 		switch ($uri) {
 			case "/":
-				$produtos = getProdutos();
+				$produtos = buscarProdutos(NULL);
 				include("pages/home.php");
 				break;
-			case "/home":
-				$produtos = getProdutos();
+			case "/produto":
+				$produtos = buscarProdutos(NULL);
 				include("pages/home.php");
 				break;
-			case "/sobre":
-				include("pages/sobre.php");
+			case "/produto/":
+				$produtos = buscarProdutos(NULL);
+				include("pages/home.php");
 				break;
-			case "/contato":
-				include("pages/contato.php");
-				break;
-			case "/busca":
-				$produtos = buscarProdutos($_GET["busca"]);
+			case "/produto/busca":
+				$produtos = buscarProdutos($_GET);
 				include("pages/home.php");
 				break;
 			case "/produto/form":
@@ -43,39 +41,39 @@ function getPagina() {
 				include("pages/form.php");
 				break;
 			default:
-				$produtos = getProdutos();
-				include("pages/home.php");
+				$produtos = buscarProdutos(NULL);
+				include("pages/erro404.php");
 				break;
 		}
 	}
 	if($metodo == "POST") {
 		switch ($uri) {
 			case "/produto/salvar":
-				if(!salvarProduto($_POST)) {
-					$msg = "Erro ao cadastrar a bebida.";
-					$produtos = getProdutos();
+				$msg = salvarProduto($_POST);
+				if($msg == "OK") {
+					$msg = "Bebida cadastrada com sucesso.";
+					$produtos = buscarProdutos(NULL);
 					include("pages/home.php");
 					break;
 				}
-				$msg = "Bebida cadastrada com sucesso.";
-				$produtos = getProdutos();
-				include("pages/home.php");
+				$produtoEdit = $_POST;
+				include("pages/form.php");
 				break;
 			case "/produto/editar":
-				if(editarProduto($_POST)) {				
-					$produtos = getProdutos();
+				$msg = editarProduto($_POST);
+				if($msg == "OK") {		
+					$produtos = buscarProdutos(NULL);
 					$msg = "Cadastro de bebida alterado com sucesso.";
 					include("pages/home.php");
 					break;
 				}
-				else {				
-					$produtos = getProdutos();
-					$msg = "Erro ao alterar o cadastro.";
-					include("pages/home.php");
+				else {
+					$produtoEdit = $_POST;
+					include("pages/form.php");
 					break;
 				}
 			default:
-				include("pages/home.php");
+				include("pages/erro404.php");
 				break;
 		}
 	}
