@@ -1,0 +1,11 @@
+Tem que ter:
+Cadastro de bebidas
+atualização dos dados
+exclusão de bebida
+Pode consultar bebidas
+a consulta pode ser feita com base na categoria, faixa de preço e fornecedor
+pode possibilitar a entrada de bebidas no estoque
+no cadastro da bebida deve conter: Nome, fabricante, fornecedor, categoria, ingredientes, data de fabricação, data de validade, se é alcoolica e teor alcoolico
+Deve haver um controle de data de validade com a regra estabelecida com a categoria relacionada
+tem que ter um numero minimo e máximo no estoque (declara no cadastro)
+Para cada transação deve haver uma trilha de auditoria, que indique op tipo da transação e o responsável, data, hora e no caso de uma alteraçãqo o status anterios do rpoduto
